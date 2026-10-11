@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Mis XV - Julieta</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+  href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap"
+  rel="stylesheet"
+  />
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+
+  <style>
+    :root {
+      --rosa: #c9899d;
+      --rosa-claro: #f7e8ec;
+      --rosa-suave: #fff8fa;
+      --dorado: #bb9361;
+      --dorado-claro: #ddc29a;
+      --texto: #4f3e43;
+      --blanco: #ffffff;
+      --sombra: 0 15px 45px rgba(99, 58, 72, 0.13);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      color: var(--texto);
+      background: var(--rosa-suave);
+      font-family: "Montserrat", sans-serif;
+      overflow-x: hidden;
+    }
+
+    section {
+      position: relative;
+      min-height: 100vh;
+      padding: 100px 7%;
+      overflow: hidden;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: "Cormorant Garamond", serif;
+      font-weight: 400;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .decorative-line {
+      display: block;
+      width: 75px;
+      height: 1px;
+      margin: 18px auto 30px;
+      background: var(--dorado);
+    }
+
+    .section-tag {
+      color: var(--dorado);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      color: var(--texto);
+      font-size: clamp(2.3rem, 5vw, 4.5rem);
+      line-height: 1;
+    }
+
+    .section-text {
+      max-width: 600px;
+      margin: 0 auto;
+      color: #795f68;
+      font-size: 0.98rem;
+      line-height: 1.9;
+    }
+
+    .gold-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-width: 190px;
+      padding: 16px 24px;
+      border: 1px solid var(--dorado);
+      border-radius: 50px;
+      background: var(--dorado);
+      color: white;
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: 0.3s ease;
+      cursor: pointer;
+    }
+
+    .gold-button:hover {
+      background: transparent;
+      color: var(--dorado);
+      transform: translateY(-3px);
+    }
+
+    .outline-button {
+      background: transparent;
+      color: var(--dorado);
+    }
+
+    .outline-button:hover {
+      background: var(--dorado);
+      color: white;
+    }
+
+    /* Música flotante */
+    .music-control {
+      position: fixed;
+      z-index: 1000;
+      right: 22px;
+      bottom: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 58px;
+      height: 58px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      background: var(--dorado);
+      color: white;
+      box-shadow: 0 10px 25px rgba(102, 68, 42, 0.25);
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .music-control:hover {
+      transform: scale(1.08);
+    }
+
+    .music-control.is-playing {
+      animation: pulse 1.6s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 0 0 0 rgba(187, 147, 97, 0.5);
+      }
+      50% {
+        box-shadow: 0 0 0 13px rgba(187, 147, 97, 0);
+      }
+    }
+
+.welcome-screen {
+  position: fixed;
+  z-index: 3000;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+  background:
+    linear-gradient(rgba(47, 26, 36, 0.45), rgba(47, 26, 36, 0.72)),
+    url("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=2000&q=90")
+    center/cover no-repeat;
+  color: white;
+  text-align: center;
+  transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+
+/* Bienvenida */
+.welcome-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.welcome-content {
+  padding: 45px 30px;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+}
+
+.welcome-content p {
+  margin-bottom: 15px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.23em;
+  text-transform: uppercase;
+}
+
+.welcome-content h1 {
+  margin-bottom: 30px;
+  color: white;
+  font-size: clamp(3rem, 10vw, 6rem);
+  font-style: italic;
+}
+
+    /* Portada */
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100svh;
+      padding: 40px 7%;
+      color: white;
+      text-align: center;
+      background:
+        linear-gradient(rgba(47, 26, 36, 0.24), rgba(47, 26, 36, 0.6)),
+        url(img/Portada.JPG)
+        /*url("https://images.unsplash.com/photo-1720049366694-ee5a7db7be02?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")*/
+        center/cover no-repeat;
+    }
+
+    .hero::after {
+      position: absolute;
+      inset: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      content: "";
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      animation: appear 1.5s ease both;
+    }
+
+    .hero-small {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      margin: 18px 0 0;
+      color: white;
+      font-size: clamp(4.2rem, 15vw, 10rem);
+      line-height: 0.9;
+      letter-spacing: 0.03em;
+    }
+
+    .hero-name {
+      margin-top: 22px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(2rem, 6vw, 4rem);
+      font-style: italic;
+    }
+
+    .hero-invitation {
+      max-width: 550px;
+      margin: 30px auto 0;
+      font-size: 0.98rem;
+      line-height: 1.8;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      right: 50%;
+      bottom: 28px;
+      transform: translateX(50%);
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .scroll-indicator i {
+      display: block;
+      margin-top: 12px;
+      animation: float 1.7s infinite;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(8px);
+      }
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Evento */
+    .event-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--rosa-suave);
+      text-align: center;
+    }
+
+    .event-wrapper {
+      width: min(100%, 1000px);
+    }
+
+    .event-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+      margin-top: 55px;
+    }
+
+    .event-card {
+      min-height: 230px;
+      padding: 35px 22px;
+      border: 1px solid rgba(187, 147, 97, 0.3);
+      border-radius: 6px;
+      background: white;
+      box-shadow: var(--sombra);
+    }
+
+    .event-card i {
+      margin-bottom: 22px;
+      color: var(--dorado);
+      font-size: 2rem;
+    }
+
+    .event-card h3 {
+      margin-bottom: 13px;
+      font-size: 1.6rem;
+    }
+
+    .event-card p {
+      color: #806b72;
+      font-size: 0.88rem;
+      line-height: 1.7;
+    }
+
+    /* Confirmación */
+    .confirmation {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 75vh;
+      color: white;
+      text-align: center;
+      background:
+        linear-gradient(rgba(75, 42, 54, 0.83), rgba(75, 42, 54, 0.83)),
+        url("https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1800&q=85")
+        center/cover no-repeat fixed;
+    }
+
+    .confirmation .section-title,
+    .confirmation .section-text {
+      color: white;
+    }
+
+    .confirmation .section-text {
+      color: rgba(255, 255, 255, 0.84);
+    }
+
+    .confirmation .gold-button {
+      margin-top: 30px;
+    }
+
+    /* Galería: carrusel estilo polaroid */
+    .gallery-section {
+      min-height: auto;
+      padding-bottom: 120px;
+      background: white;
+      text-align: center;
+    }
+
+    .carousel {
+      position: relative;
+      width: min(100%, 700px);
+      margin: 52px auto 0;
+      padding: 16px;
+    }
+
+    /*
+      Marco dorado:
+      contiene la foto y la franja inferior del texto.
+      La altura extra se crea con padding-bottom.
+    */
+    .carousel::before {
+      position: absolute;
+      z-index: 0;
+      inset: 0;
+      border: 1px solid rgba(187, 147, 97, 0.7);
+      content: "";
+      pointer-events: none;
+    }
+
+    .carousel-viewport {
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      background: white;
+      box-shadow: var(--sombra);
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.75s cubic-bezier(0.65, 0, 0.35, 1);
+      will-change: transform;
+    }
+
+    .carousel-slide {
+      display: flex;
+      flex: 0 0 100%;
+      flex-direction: column;
+      min-width: 0;
+      background: white;
+    }
+
+    .carousel-photo {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: clamp(290px, 52vw, 470px);
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    /*
+      El fondo reutiliza la imagen de cada slide,
+      ampliada y difuminada.
+    */
+    .carousel-photo::before {
+      position: absolute;
+      z-index: 0;
+      inset: -30px;
+      background-image: var(--slide-image);
+      background-position: center;
+      background-size: cover;
+      filter: blur(28px);
+      opacity: 0.5;
+      content: "";
+      transform: scale(1.14);
+    }
+
+    .carousel-photo::after {
+      position: absolute;
+      z-index: 0;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.16);
+      content: "";
+    }
+
+    .carousel-photo img {
+      position: relative;
+      z-index: 1;
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+      object-position: center;
+      filter: drop-shadow(0 11px 20px rgba(79, 62, 67, 0.22));
+      transform: scale(1);
+    }
+
+    /* Paneo suave sin cortar la foto */
+    .carousel-slide.active .carousel-photo img {
+      animation: photoPan 8s ease-in-out forwards;
+    }
+
+    @keyframes photoPan {
+      0% {
+        transform: scale(1) translate3d(-0.5%, 0, 0);
+      }
+
+      50% {
+        transform: scale(1.025) translate3d(0.5%, -0.4%, 0);
+      }
+
+      100% {
+        transform: scale(1.01) translate3d(0.2%, 0.2%, 0);
+      }
+    }
+
+    /*
+      Franja inferior estilo polaroid:
+      el texto no se superpone a la fotografía.
+    */
+    .carousel-caption {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 180px;
+      padding: 40px 50px;
+      background: white;
+      color: var(--texto);
+      text-align: center;
+    }
+
+    .carousel-caption p {
+      max-width: 650px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(1.65rem, 3.6vw, 2.6rem);
+      font-style: italic;
+      font-weight: 500;
+      line-height: 1.1;
+    }
+
+    /* Flechas sobre la zona de la foto */
+    .carousel-arrow {
+      position: absolute;
+      z-index: 3;
+      top: calc(50% - 58px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      background: rgba(79, 62, 67, 0.48);
+      color: white;
+      cursor: pointer;
+      transform: translateY(-50%);
+      transition: 0.3s ease;
+    }
+
+    .carousel-arrow:hover {
+      border-color: var(--dorado);
+      background: var(--dorado);
+      transform: translateY(-50%) scale(1.08);
+    }
+
+    .carousel-prev {
+      left: 31px;
+    }
+
+    .carousel-next {
+      right: 31px;
+    }
+
+    .carousel-dots {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+      margin-top: 30px;
+    }
+
+    .carousel-dot {
+      width: 9px;
+      height: 9px;
+      padding: 0;
+      border: 1px solid var(--dorado);
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .carousel-dot.active {
+      width: 27px;
+      border-radius: 20px;
+      background: var(--dorado);
+    }
+
+    @media (max-width: 700px) {
+      .gallery-section {
+        padding-bottom: 95px;
+      }
+
+      .carousel {
+        margin-top: 42px;
+        padding: 11px;
+      }
+
+      .carousel-photo {
+        height: min(68vw, 390px);
+        min-height: 300px;
+      }
+
+      .carousel-caption {
+        min-height: 135px;
+        padding: 32px 22px;
+      }
+
+      .carousel-arrow {
+        top: calc(50% - 50px);
+        width: 42px;
+        height: 42px;
+        font-size: 0.8rem;
+      }
+
+      .carousel-prev {
+        left: 18px;
+      }
+
+      .carousel-next {
+        right: 18px;
+      }
+    }
+
+    /* Dresscode */
+    .dresscode {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 75vh;
+      text-align: center;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(221, 194, 154, 0.2), transparent 30%),
+        var(--rosa-claro);
+    }
+
+    .dress-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 28px;
+      border: 1px solid var(--dorado);
+      border-radius: 50%;
+      color: var(--dorado);
+      font-size: 3rem;
+    }
+
+    .dresscode h2 {
+      font-size: clamp(3rem, 7vw, 5.5rem);
+    }
+
+    .dresscode strong {
+      display: block;
+      margin: 22px 0 12px;
+      color: var(--dorado);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 2rem;
+      font-weight: 400;
+    }
+
+    /* Música y regalos */
+    .interactive-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 70vh;
+      text-align: center;
+      background: var(--rosa-suave);
+    }
+
+    .interactive-section:nth-of-type(even) {
+      background: white;
+    }
+
+    .interactive-icon {
+      margin-bottom: 22px;
+      color: var(--dorado);
+      font-size: 2.8rem;
+    }
+
+    .interactive-section .gold-button {
+      margin-top: 28px;
+    }
+
+    .footer {
+      padding: 45px 20px;
+      background: #51353f;
+      color: rgba(255, 255, 255, 0.85);
+      text-align: center;
+    }
+
+    .footer h3 {
+      color: white;
+      font-size: 2rem;
+    }
+
+    .footer p {
+      margin-top: 10px;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+    }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      z-index: 2000;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(42, 24, 30, 0.7);
+    }
+
+    .modal.open {
+      display: flex;
+    }
+
+    .modal-content {
+      position: relative;
+      width: min(100%, 470px);
+      padding: 42px 30px;
+      border-radius: 7px;
+      background: white;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      animation: appear 0.35s ease both;
+    }
+
+    .modal-content h3 {
+      color: var(--texto);
+      font-size: 2.3rem;
+    }
+
+    .modal-content p {
+      margin-top: 16px;
+      color: #765e67;
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    .modal-content input {
+      width: 100%;
+      margin-top: 25px;
+      padding: 15px;
+      border: 1px solid #dbc3ca;
+      border-radius: 3px;
+      outline: none;
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .modal-content .gold-button {
+      margin-top: 15px;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      border: 0;
+      background: transparent;
+      color: #856c74;
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
+
+    .bank-data {
+      margin: 25px 0;
+      padding: 18px;
+      border-radius: 5px;
+      background: var(--rosa-suave);
+      color: #6c555d;
+      font-size: 0.86rem;
+      line-height: 1.9;
+      text-align: left;
+    }
+
+    @media (max-width: 700px) {
+      section {
+        padding: 85px 6%;
+      }
+
+      .hero::after {
+        inset: 11px;
+      }
+
+      .event-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .event-card {
+        min-height: auto;
+        padding: 27px 20px;
+      }
+
+      .confirmation {
+        background-attachment: scroll;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="welcomeScreen" class="welcome-screen">
+    <div class="welcome-content">
+      <p>Estás invitado a celebrar</p>
+      <h1>Los XV de Julieta</h1>
+
+      <button id="openInvitationButton" class="gold-button">
+        <i class="fa-solid fa-play"></i>
+        Abrir invitación
+      </button>
+    </div>
+  </div>
+
+  <!-- Música de fondo -->
+  <audio id="backgroundMusic" loop>
+    <!-- Reemplaza este archivo por tu canción -->
+    <source src="musica/the-climb-instrumental.mp3" type="audio/mpeg" />
+    Tu navegador no soporta audio HTML5.
+  </audio>
+
+  <button id="musicButton" class="music-control" aria-label="Reproducir música">
+    <i id="musicIcon" class="fa-solid fa-play"></i>
+  </button>
+
+  <!-- Portada -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-small">Una noche para recordar</div>
+
+      <h1>MIS XV</h1>
+
+      <div class="hero-name">Julieta</div>
+
+      <span class="decorative-line"></span>
+
+      <p class="hero-invitation">
+        Hay momentos en la vida que son especiales por sí solos,
+        pero compartirlos con las personas que queremos los convierte
+        en momentos inolvidables.
+      </p>
+    </div>
+
+    <div class="scroll-indicator">
+      Descubrí la invitación
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+  </section>
+
+  <!-- Información del evento -->
+  <section class="event-section">
+    <div class="event-wrapper">
+      <span class="section-tag">Te espero para celebrar</span>
+      <h2 class="section-title">Una noche especial</h2>
+      <span class="decorative-line"></span>
+
+      <p class="section-text">
+        Me encantaría compartir con vos una noche llena de alegría,
+        música y momentos inolvidables.
+      </p>
+
+      <div class="event-grid">
+        <article class="event-card">
+          <i class="fa-regular fa-calendar-days"></i>
+          <h3>Fecha</h3>
+          <p>Sábado 28 de noviembre<br />de 2026</p>
+        </article>
+
+        <article class="event-card">
+          <i class="fa-regular fa-clock"></i>
+          <h3>Hora</h3>
+          <p>21:00 horas</p>
+        </article>
+
+        <article class="event-card">
+          <i class="fa-solid fa-location-dot"></i>
+          <h3>Salón</h3>
+          <p>
+            Salón Yatch Club Solís Chico<br />
+            <a href="https://www.google.com/maps/place/Yacht+Club+Solís+Chico/@-34.7582656,-55.7030803,17z/data=!3m1!4b1!4m6!3m5!1s0x959ff70fb91a6a75:0xe67de71ff5e1d757!8m2!3d-34.7582656!4d-55.7005!16s%2Fg%2F1th24_2c?entry=ttu&g_ep=EgoyMDI2MDkyOC4wIKXMDSoASAFQAw%3D%3D"
+              target="_blank"
+              rel="noopener"
+              style="color: var(--dorado); text-decoration: none;">
+              Ver cómo llegar
+            </a>
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Confirmación -->
+  <section class="confirmation">
+    <div>
+      <span class="section-tag">Tu presencia es muy importante</span>
+      <h2 class="section-title">Confirmá tu asistencia</h2>
+      <span class="decorative-line"></span>
+
+      <p class="section-text">
+        Por favor, confirmá tu asistencia antes del 1 de noviembre.
+        ¡Te esperamos para festejar juntos!
+      </p>
+
+      <!-- El número se configura desde JavaScript -->
+      <a id="whatsappButton" class="gold-button" href="#" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i>
+        Confirmar por WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- Galería -->
+  <section class="gallery-section">
+    <span class="section-tag">Mis recuerdos</span>
+    <h2 class="section-title">Un recorrido de estos 15 años</h2>
+    <span class="decorative-line"></span>
+
+    <div class="carousel" id="photoCarousel">
+      <div class="carousel-viewport">
+        <div class="carousel-track">
+
+          <article
+            class="carousel-slide active"
+            style="--slide-image: url('img/img01.jpeg');"
+          >
+            <div class="carousel-photo">
+              <img
+                src="img/img01.jpeg"
+                alt="Recuerdo de Julieta"
+              />
+            </div>
+
+            <div class="carousel-caption">
+              <p>Recuerdos que atesoro</p>
+            </div>
+          </article>
+
+          <article
+            class="carousel-slide"
+            style="--slide-image: url('img/img02.jpeg');"
+          >
+            <div class="carousel-photo">
+              <img
+                src="img/img02.jpeg"
+                alt="Recuerdo de Julieta"
+              />
+            </div>
+
+            <div class="carousel-caption">
+              <p>Momentos que me hicieron crecer</p>
+            </div>
+          </article>
+
+          <article
+            class="carousel-slide"
+            style="--slide-image: url('img/img03.jpeg');"
+          >
+            <div class="carousel-photo">
+              <img
+                src="img/img03.jpeg"
+                alt="Recuerdo de Julieta"
+              />
+            </div>
+
+            <div class="carousel-caption">
+              <p>Sonrisas que nunca olvidaré</p>
+            </div>
+          </article>
+
+          <article
+            class="carousel-slide"
+            style="--slide-image: url('img/img04.jpeg');"
+          >
+            <div class="carousel-photo">
+              <img
+                src="img/img04.jpeg"
+                alt="Recuerdo de Julieta"
+              />
+            </div>
+
+            <div class="carousel-caption">
+              <p>Una historia llena de amor</p>
+            </div>
+          </article>
+
+          <article
+            class="carousel-slide"
+            style="--slide-image: url('img/img05.jpeg');"
+          >
+            <div class="carousel-photo">
+              <img
+                src="img/img05.jpeg"
+                alt="Recuerdo especial de Julieta"
+              />
+            </div>
+
+            <div class="carousel-caption">
+              <p>Y lo mejor todavía está por venir</p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <button
+        class="carousel-arrow carousel-prev"
+        type="button"
+        aria-label="Ver foto anterior"
+      >
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+
+      <button
+        class="carousel-arrow carousel-next"
+        type="button"
+        aria-label="Ver foto siguiente"
+      >
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+
+      <div class="carousel-dots" aria-label="Navegación de fotos">
+        <button class="carousel-dot active" type="button" aria-label="Ver foto 1"></button>
+        <button class="carousel-dot" type="button" aria-label="Ver foto 2"></button>
+        <button class="carousel-dot" type="button" aria-label="Ver foto 3"></button>
+        <button class="carousel-dot" type="button" aria-label="Ver foto 4"></button>
+        <button class="carousel-dot" type="button" aria-label="Ver foto 5"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dresscode -->
+  <section class="dresscode">
+    <div>
+      <div class="dress-icon">
+        <i class="fa-solid fa-wand-magic-sparkles"></i>
+      </div>
+
+      <span class="section-tag">Código de vestimenta</span>
+      <h2>Formal</h2>
+      <span class="decorative-line"></span>
+
+      <p class="section-text">
+        Una ocasión tan especial merece un look elegante.<br>
+        ¡Los espero para compartir una noche mágica!
+      </p>
+    </div>
+  </section>
+
+  <!-- Música -->
+  <section class="interactive-section">
+    <div>
+      <div class="interactive-icon">
+        <i class="fa-solid fa-music"></i>
+      </div>
+
+      <span class="section-tag">Ayudame a armar la playlist</span>
+      <h2 class="section-title">Música</h2>
+      <span class="decorative-line"></span>
+
+      <p class="section-text">
+        ¿Cuál es la canción que no debe faltar en la fiesta?
+      </p>
+
+      <button id="songButton" class="gold-button">
+        <i class="fa-solid fa-pen"></i>
+        Escribir canción
+      </button>
+    </div>
+  </section>
+
+  <!-- Regalos -->
+  <section class="interactive-section">
+    <div>
+      <div class="interactive-icon">
+        <i class="fa-solid fa-gift"></i>
+      </div>
+
+      <span class="section-tag">Un detalle de cariño</span>
+      <h2 class="section-title">Regalos</h2>
+      <span class="decorative-line"></span>
+
+      <p class="section-text">
+        Si deseas regalarme algo más que tu hermosa presencia...
+      </p>
+
+      <button id="giftButton" class="gold-button outline-button">
+        <i class="fa-solid fa-building-columns"></i>
+        Ver datos bancarios
+      </button>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <h3>Gracias por ser parte</h3>
+    <p>Con cariño, Julieta</p>
+  </footer>
+
+  <!-- Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <button id="closeModal" class="close-modal" aria-label="Cerrar">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div id="songModalContent">
+        <h3>Tu canción</h3>
+        <p>
+          Escribí el nombre de la canción que te gustaría escuchar
+          durante la fiesta.
+        </p>
+
+        <input
+          id="songInput"
+          type="text"
+          placeholder="Ej: Perfect - Ed Sheeran"
+        />
+
+        <button id="sendSongButton" class="gold-button">
+          <i class="fa-brands fa-whatsapp"></i>
+          Enviar canción
+        </button>
+      </div>
+
+      <div id="giftModalContent" style="display: none;">
+        <h3>Datos bancarios</h3>
+
+        <div class="bank-data">
+          <strong>Banco:</strong> PREX<br />
+          <strong style="text-decoration: none;">Cuenta:</strong> 1775069<br />
+          <strong>Titular:</strong> Julieta Mendonca<br />
+        </div>
+
+        <button id="copyBankButton" class="gold-button">
+          <i class="fa-regular fa-copy"></i>
+          Copiar datos
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    
+    /*
+      ===========================================
+      CONFIGURACIÓN DE LA INVITACIÓN
+      ===========================================
+    */
+
+    const config = {
+      // WhatsApp en formato internacional, sin +, espacios ni guiones.
+      whatsapp: "59892901937",
+
+      // Texto que se enviará al confirmar asistencia.
+      whatsappConfirmation:
+        "Hola Julieta, quiero confirmar mi asistencia a tus XV. ¡Nos vemos!",
+
+      // Texto para enviar una sugerencia musical.
+      whatsappSongPrefix:
+        "Hola Julieta, la canción que no puede faltar en tu fiesta es: "
+    };
+
+    /*
+  ===========================================
+  MÚSICA Y PANTALLA DE BIENVENIDA
+  ===========================================
+    */
+
+    const music = document.getElementById("backgroundMusic");
+    const musicButton = document.getElementById("musicButton");
+    const musicIcon = document.getElementById("musicIcon");
+
+    function actualizarBotonMusica(estaSonando) {
+      if (estaSonando) {
+        musicIcon.className = "fa-solid fa-pause";
+        musicButton.classList.add("is-playing");
+        musicButton.setAttribute("aria-label", "Pausar música");
+      } else {
+        musicIcon.className = "fa-solid fa-play";
+        musicButton.classList.remove("is-playing");
+        musicButton.setAttribute("aria-label", "Reproducir música");
+      }
+    }
+
+    musicButton.addEventListener("click", async () => {
+      if (music.paused) {
+        try {
+          await music.play();
+          actualizarBotonMusica(true);
+        } catch (error) {
+          console.error("No se pudo reproducir la música:", error);
+        }
+      } else {
+        music.pause();
+        actualizarBotonMusica(false);
+      }
+    });
+
+    const welcomeScreen = document.getElementById("welcomeScreen");
+    const openInvitationButton = document.getElementById("openInvitationButton");
+
+    openInvitationButton.addEventListener("click", async () => {
+      try {
+        await music.play();
+        actualizarBotonMusica(true);
+      } catch (error) {
+        console.warn("La música fue bloqueada o no se encontró el archivo:", error);
+        actualizarBotonMusica(false);
+      }
+
+      welcomeScreen.classList.add("hidden");
+
+      setTimeout(() => {
+        welcomeScreen.remove();
+      }, 800);
+});
+
+    /*
+      ===========================================
+      WHATSAPP
+      ===========================================
+    */
+
+    const whatsappButton = document.getElementById("whatsappButton");
+
+    whatsappButton.href =
+      `https://wa.me/${config.whatsapp}?text=${encodeURIComponent(
+        config.whatsappConfirmation
+      )}`;
+
+    /*
+      ===========================================
+      MODALES
+      ===========================================
+    */
+
+    const modal = document.getElementById("modal");
+    const closeModal = document.getElementById("closeModal");
+    const songButton = document.getElementById("songButton");
+    const giftButton = document.getElementById("giftButton");
+
+    const songModalContent = document.getElementById("songModalContent");
+    const giftModalContent = document.getElementById("giftModalContent");
+
+    function openModal(type) {
+      modal.classList.add("open");
+
+      if (type === "song") {
+        songModalContent.style.display = "block";
+        giftModalContent.style.display = "none";
+      }
+
+      if (type === "gift") {
+        songModalContent.style.display = "none";
+        giftModalContent.style.display = "block";
+      }
+    }
+
+    function closeCurrentModal() {
+      modal.classList.remove("open");
+    }
+
+    songButton.addEventListener("click", () => openModal("song"));
+    giftButton.addEventListener("click", () => openModal("gift"));
+    closeModal.addEventListener("click", closeCurrentModal);
+
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        closeCurrentModal();
+      }
+    });
+
+    /*
+      ===========================================
+      CARRUSEL DE FOTOS
+      ===========================================
+    */
+
+    const carousel = document.getElementById("photoCarousel");
+    const carouselTrack = carousel.querySelector(".carousel-track");
+    const carouselSlides = carousel.querySelectorAll(".carousel-slide");
+    const carouselDots = carousel.querySelectorAll(".carousel-dot");
+    const previousSlideButton = carousel.querySelector(".carousel-prev");
+    const nextSlideButton = carousel.querySelector(".carousel-next");
+
+    let currentSlide = 0;
+    let carouselInterval;
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    function showSlide(index) {
+      const totalSlides = carouselSlides.length;
+
+      currentSlide = (index + totalSlides) % totalSlides;
+
+      carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+      carouselSlides.forEach((slide, slideIndex) => {
+        slide.classList.toggle("active", slideIndex === currentSlide);
+      });
+
+      carouselDots.forEach((dot, dotIndex) => {
+        dot.classList.toggle("active", dotIndex === currentSlide);
+      });
+    }
+
+    function nextSlide() {
+      showSlide(currentSlide + 1);
+    }
+
+    function previousSlide() {
+      showSlide(currentSlide - 1);
+    }
+
+    function startCarousel() {
+      stopCarousel();
+
+      carouselInterval = setInterval(() => {
+        nextSlide();
+      }, 5000);
+    }
+
+    function stopCarousel() {
+      clearInterval(carouselInterval);
+    }
+
+    nextSlideButton.addEventListener("click", () => {
+      nextSlide();
+      startCarousel();
+    });
+
+    previousSlideButton.addEventListener("click", () => {
+      previousSlide();
+      startCarousel();
+    });
+
+    carouselDots.forEach((dot, index) => {
+      dot.addEventListener("click", () => {
+        showSlide(index);
+        startCarousel();
+      });
+    });
+
+    carousel.addEventListener("mouseenter", stopCarousel);
+    carousel.addEventListener("mouseleave", startCarousel);
+
+    carousel.addEventListener("touchstart", (event) => {
+      touchStartX = event.changedTouches[0].screenX;
+      stopCarousel();
+    }, { passive: true });
+
+    carousel.addEventListener("touchend", (event) => {
+      touchEndX = event.changedTouches[0].screenX;
+
+      const swipeDistance = touchEndX - touchStartX;
+
+      if (swipeDistance < -50) {
+        nextSlide();
+      }
+
+      if (swipeDistance > 50) {
+        previousSlide();
+      }
+
+      startCarousel();
+    }, { passive: true });
+
+    showSlide(0);
+    startCarousel();
+
+    /*
+      ===========================================
+      ENVIAR CANCIÓN POR WHATSAPP
+      ===========================================
+    */
+
+    const songInput = document.getElementById("songInput");
+    const sendSongButton = document.getElementById("sendSongButton");
+
+    sendSongButton.addEventListener("click", () => {
+      const song = songInput.value.trim();
+
+      if (!song) {
+        alert("Escribí una canción antes de enviarla.");
+        return;
+      }
+
+      const message = config.whatsappSongPrefix + song;
+      const url =
+        `https://wa.me/${config.whatsapp}?text=${encodeURIComponent(message)}`;
+
+      window.open(url, "_blank");
+    });
+
+    /*
+      ===========================================
+      COPIAR DATOS BANCARIOS
+      ===========================================
+    */
+
+    const copyBankButton = document.getElementById("copyBankButton");
+
+    copyBankButton.addEventListener("click", async () => {
+      const bankData = `
+        1775069
+      `.trim();
+
+      try {
+        await navigator.clipboard.writeText(bankData);
+        copyBankButton.innerHTML =
+          '<i class="fa-solid fa-check"></i> Datos copiados';
+
+        setTimeout(() => {
+          copyBankButton.innerHTML =
+            '<i class="fa-regular fa-copy"></i> Copiar datos';
+        }, 2200);
+      } catch {
+        alert(bankData);
+      }
+    });
+  </script>
+</body>
+</html>
